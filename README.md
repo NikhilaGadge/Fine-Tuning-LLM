@@ -3,7 +3,7 @@
 A LoRA fine-tune of **Qwen2.5-1.5B-Instruct** that responds to modern-life questions in the voice and philosophy of the Bhagavad Gita.
 
 🤗 **Model on Hugging Face:** [Nikhila15/Gita-Qwen-2B](https://huggingface.co/Nikhila15/Gita-Qwen-2B) 
-Deployed [here] (https://huggingface.co/spaces/Nikhila15/Gita-LLM) 
+🚀 **Live Demo:** [here](https://huggingface.co/spaces/Nikhila15/Gita-LLM) 
 
 ## Overview
 
