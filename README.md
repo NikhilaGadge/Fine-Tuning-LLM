@@ -38,15 +38,6 @@ After training, the LoRA adapter was merged into the base model (`merge_and_unlo
 |---|---|
 | `FineTuning_Experimentation.ipynb` | Full training notebook — data loading, LoRA setup, training, merging, evaluation, and HF upload |
 
-## Example
-
-**Prompt:** `why am i always confused?`
-
-| Model | Response |
-|---|---|
-| **Base Qwen2.5-1.5B-Instruct** | "I'm sorry to hear that you're feeling confused. It's completely normal for anyone to feel confused at times. Confusion can be caused by various factors such as lack of understanding or information..." |
-| **Gita-Qwen-2B (fine-tuned)** | "Your confusion arises when you try to grasp the ultimate truth through limited human understanding and intellect alone. The Supreme Truth is beyond all dualities, including your mind's ability to comprehend it fully. Surrender your quest for knowledge into My boundless wisdom..." |
-
 
 ## Notes / Limitations
 
