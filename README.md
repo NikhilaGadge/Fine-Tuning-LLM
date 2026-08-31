@@ -1,2 +1,62 @@
-# FineTuningExperimentation
-Repo for practising fine-tuning
+# Gita-Qwen-2B — Fine-tuning an LLM on the Bhagavad Gita
+
+A LoRA fine-tune of **Qwen2.5-1.5B-Instruct** that responds to modern-life questions in the voice and philosophy of the Bhagavad Gita.
+
+🤗 **Model on Hugging Face:** [Nikhila15/Gita-Qwen-2B](https://huggingface.co/Nikhila15/Gita-Qwen-2B)
+
+
+## Overview
+
+This project fine-tunes a small instruction-tuned LLM so that it answers everyday questions (stress, relationships, purpose, motivation, etc.) the way the Bhagavad Gita frames them — first-person, aphoristic, rooted in concepts like detachment from outcomes, duty, and the eternal Self — instead of giving a generic AI-assistant answer.
+
+## Base Model
+
+- [`unsloth/Qwen2.5-1.5B-Instruct`](https://huggingface.co/unsloth/Qwen2.5-1.5B-Instruct), loaded in 4-bit
+
+## Dataset
+
+[Bhagavad Gita Q&A Dataset for Modern Life Problems](https://www.kaggle.com/datasets/rambo011/bhagavad-gita-q-and-a-dataset-for-modern-life-problem) (Kaggle)
+
+- 12,902 question/answer pairs across all 18 chapters
+- Each answer is written as if spoken by Krishna, addressing a modern-life problem through Gita philosophy
+- Formatted into chat turns via `tokenizer.apply_chat_template()` (ChatML format, matching how the base model was originally trained)
+
+## Method
+
+- **Technique:** LoRA (via [Unsloth](https://github.com/unslothai/unsloth) + 🤗 TRL's `SFTTrainer`)
+- **LoRA config:** `r=16`, `lora_alpha=16`, target modules = all attention + MLP projections
+- **Training:** 1 epoch, batch size 2 × grad accumulation 4 (effective batch size 8), learning rate `2e-4`, `assistant_only_loss=True` (loss computed only on the assistant's turns, not the prompt)
+- **Hardware:** Single Tesla T4 (free Google Colab)
+- **Result:** final training loss ≈ 1.47 over 1,613 steps
+
+After training, the LoRA adapter was merged into the base model (`merge_and_unload` / `save_pretrained_merged`, 16-bit) and pushed to the Hugging Face Hub as a single standalone model.
+
+
+## Repo Contents
+
+| File | Description |
+|---|---|
+| `FineTuning_Experimentation.ipynb` | Full training notebook — data loading, LoRA setup, training, merging, evaluation, and HF upload |
+
+## Example
+
+**Prompt:** `why am i always confused?`
+
+| Model | Response |
+|---|---|
+| **Base Qwen2.5-1.5B-Instruct** | "I'm sorry to hear that you're feeling confused. It's completely normal for anyone to feel confused at times. Confusion can be caused by various factors such as lack of understanding or information..." |
+| **Gita-Qwen-2B (fine-tuned)** | "Your confusion arises when you try to grasp the ultimate truth through limited human understanding and intellect alone. The Supreme Truth is beyond all dualities, including your mind's ability to comprehend it fully. Surrender your quest for knowledge into My boundless wisdom..." |
+
+
+## Notes / Limitations
+
+- This is a small experimental fine-tune (1.5B parameters, single epoch) — responses are stylistically consistent but not guaranteed to be philosophically or theologically precise.
+- No held-out evaluation set was used; qualitative comparison against the base model was done via manual prompt testing.
+- Not intended as a substitute for study of the actual text or qualified spiritual guidance — it's a demonstration of instruction fine-tuning, not a scholarly resource.
+- Not commercially usable / not production-ready. This is purely an experimental, personal learning project. The training data was narrow (modern-life-problem Q&A pairs), so the model has effectively lost general-purpose conversational ability — it does not respond well to casual input like "Hi" or small talk, and should not be relied on as a general chatbot. It only performs reasonably on questions that resemble its training distribution (a person describing a struggle/problem and asking for guidance).
+
+## Acknowledgements
+
+- [Unsloth](https://github.com/unslothai/unsloth) for fast LoRA fine-tuning
+- [rambo011](https://www.kaggle.com/rambo011) for the Kaggle dataset
+- Base model by the [Qwen team](https://huggingface.co/Qwen) / [Unsloth](https://huggingface.co/unsloth)
