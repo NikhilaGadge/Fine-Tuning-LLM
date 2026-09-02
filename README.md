@@ -7,11 +7,11 @@ A LoRA fine-tune of **Qwen2.5-1.5B-Instruct** that responds to modern-life quest
 
 ## Overview
 
-This project fine-tunes a small instruction-tuned LLM so that it answers everyday questions (stress, relationships, purpose, motivation, etc.) the way the Bhagavad Gita frames them — first-person, aphoristic, rooted in concepts like detachment from outcomes, duty, and the eternal Self — instead of giving a generic AI-assistant answer.
+This project fine-tunes a small instruction-tuned LLM so that it answers everyday questions (stress, relationships, purpose, motivation, etc.) the way the Bhagavad Gita frames them in first-person instead of giving a generic AI-assistant answer.
 
 ## Base Model
 
-- [`unsloth/Qwen2.5-1.5B-Instruct`](https://huggingface.co/unsloth/Qwen2.5-1.5B-Instruct), loaded in 4-bit
+[`unsloth/Qwen2.5-1.5B-Instruct`](https://huggingface.co/unsloth/Qwen2.5-1.5B-Instruct), loaded in 4-bit
 
 ## Dataset
 
@@ -32,19 +32,12 @@ This project fine-tunes a small instruction-tuned LLM so that it answers everyda
 After training, the LoRA adapter was merged into the base model (`merge_and_unload` / `save_pretrained_merged`, 16-bit) and pushed to the Hugging Face Hub as a single standalone model.
 
 
-## Repo Contents
-
-| File | Description |
-|---|---|
-| `FineTuning_Experimentation.ipynb` | Full training notebook — data loading, LoRA setup, training, merging, evaluation, and HF upload |
-
-
 ## Notes / Limitations
 
-- This is a small experimental fine-tune (1.5B parameters, single epoch) — responses are stylistically consistent but not guaranteed to be philosophically or theologically precise.
+- This is a small experimental fine-tune (1.5B parameters, single epoch) - responses are stylistically consistent but not guaranteed to be philosophically or theologically precise.
 - No held-out evaluation set was used; qualitative comparison against the base model was done via manual prompt testing.
-- Not intended as a substitute for study of the actual text or qualified spiritual guidance — it's a demonstration of instruction fine-tuning, not a scholarly resource.
-- Not commercially usable / not production-ready. This is purely an experimental, personal learning project. The training data was narrow (modern-life-problem Q&A pairs), so the model has effectively lost general-purpose conversational ability — it does not respond well to casual input like "Hi" or small talk, and should not be relied on as a general chatbot. It only performs reasonably on questions that resemble its training distribution (a person describing a struggle/problem and asking for guidance).
+- Not intended as a substitute for study of the actual text or qualified spiritual guidance - it's a demonstration of instruction fine-tuning, not a scholarly resource.
+- Not commercially usable / not production-ready. This is purely an experimental, personal learning project. The training data was narrow (modern-life-problem Q&A pairs), so the model has effectively lost general-purpose conversational ability - it does not respond well to casual input like "Hi" or small talk, and should not be relied on as a general chatbot. It only performs reasonably on questions that resemble its training distribution (a person describing a struggle/problem and asking for guidance).
 
 ### Disclaimer
 
@@ -55,3 +48,7 @@ This is a personal/educational fine-tuning experiment, not an authoritative sour
 - [Unsloth](https://github.com/unslothai/unsloth) for fast LoRA fine-tuning
 - [rambo011](https://www.kaggle.com/rambo011) for the Kaggle dataset
 - Base model by the [Qwen team](https://huggingface.co/Qwen) / [Unsloth](https://huggingface.co/unsloth)
+
+## Author
+
+Nikhila Gadge
